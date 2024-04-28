@@ -1,0 +1,6 @@
+chalk==4.*
+ms==3.0.0-beta.2
+prettier==2.*
+typescript==5.1.*
+
+pnpm add chalk@4.* ms@3.0.0-beta.2 prettier@2.* typescript@5.1.*
