@@ -14,7 +14,35 @@
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
-        "paths": {}
+        "esModuleInterop": true,
+        "paths": {
+            "@lahoo/api": ["libs/api/src/index.ts"],
+            "@lahoo/authentication": ["libs/module/authentication/src/index.ts"],
+            "@lahoo/config": ["libs/module/config/src/index.ts"],
+            "@lahoo/frontend-firebase": ["libs/frontend/firebase/src/index.ts"],
+            "@lahoo/mailing": ["libs/module/mailing/src/index.ts"],
+            "@lahoo/ngx-style": ["libs/frontend/ngx-style/src/index.ts"],
+            "@lahoo/ngx-zorro": ["libs/frontend/ngx-zorro/src/index.ts"],
+            "@lahoo/store": ["libs/module/store/src/index.ts"],
+            "@lahoo/system-authentication": ["libs/system/authentication/src/index.ts"],
+            "@lahoo/system-authorization": ["libs/system/authorization/src/index.ts"],
+            "@lahoo/system-bootstrap": ["libs/system/bootstrap/src/index.ts"],
+            "@lahoo/system-cache": ["libs/system/cache/src/index.ts"],
+            "@lahoo/system-centrifugo": ["libs/system/centrifugo/src/index.ts"],
+            "@lahoo/system-drizzle": ["libs/system/drizzle/src/index.ts"],
+            "@lahoo/system-environment": ["libs/system/environment/src/index.ts"],
+            "@lahoo/system-firebase": ["libs/system/firebase/src/index.ts"],
+            "@lahoo/system-lock": ["libs/system/lock/src/index.ts"],
+            "@lahoo/system-logger": ["libs/system/logger/src/index.ts"],
+            "@lahoo/system-pipe": ["libs/system/pipe/src/index.ts"],
+            "@lahoo/system-querier": ["libs/system/querier/src/index.ts"],
+            "@lahoo/system-redis": ["libs/system/redis/src/index.ts"],
+            "@lahoo/system-security": ["libs/system/security/src/index.ts"],
+            "@lahoo/system-sentry": ["libs/system/sentry/src/index.ts"],
+            "@lahoo/type": ["libs/type/src/index.ts"],
+            "@lahoo/util": ["libs/util/src/index.ts"],
+            "@lahoo/wrapper-authentication": ["libs/wrapper/authentication/src/index.ts"]
+        }
     },
     "exclude": ["node_modules", "tmp"]
 }

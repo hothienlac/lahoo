@@ -1,0 +1,9 @@
+{
+    "name": "system-sentry",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/system/sentry/src",
+    "projectType": "library",
+    "tags": [],
+    "// targets": "to see all targets run: nx show project system-sentry --web",
+    "targets": {}
+}

@@ -1,0 +1,9 @@
+{
+    "name": "wrapper-authentication",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/wrapper/authentication/src",
+    "projectType": "library",
+    "tags": [],
+    "// targets": "to see all targets run: nx show project wrapper-authentication --web",
+    "targets": {}
+}

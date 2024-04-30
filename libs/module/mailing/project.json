@@ -1,0 +1,9 @@
+{
+    "name": "module-mailing",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/module/mailing/src",
+    "projectType": "library",
+    "tags": [],
+    "// targets": "to see all targets run: nx show project module-mailing --web",
+    "targets": {}
+}
