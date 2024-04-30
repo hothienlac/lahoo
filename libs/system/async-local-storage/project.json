@@ -1,0 +1,9 @@
+{
+    "name": "system-async-local-storage",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/system/async-local-storage/src",
+    "projectType": "library",
+    "tags": [],
+    "// targets": "to see all targets run: nx show project system-async-local-storage --web",
+    "targets": {}
+}

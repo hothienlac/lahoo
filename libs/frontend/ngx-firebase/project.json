@@ -1,0 +1,20 @@
+{
+    "name": "ngx-firebase",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/frontend/ngx-firebase/src",
+    "prefix": "ngx-firebase",
+    "projectType": "library",
+    "tags": [],
+    "targets": {
+        "test": {
+            "executor": "@nx/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "libs/frontend/ngx-firebase/jest.config.ts"
+            }
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint"
+        }
+    }
+}

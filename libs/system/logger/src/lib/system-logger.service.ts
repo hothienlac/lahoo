@@ -1,6 +1,5 @@
 import { Injectable, ConsoleLogger, LogLevel } from '@nestjs/common';
 import { INTERNAL, loggingLevelPriority } from './system-logger.type';
-import { CLS_REQUEST_ID } from '@lahoo/constant';
 import { SystemAsyncLocalStorageService } from '@lahoo/system-async-local-storage';
 import { loggingLevel } from './system-logger.environment';
 
@@ -26,7 +25,7 @@ export class SystemLoggerService extends ConsoleLogger {
         const output = this.stringifyMessage(message, logLevel);
         pidMessage = this.colorize(pidMessage, logLevel);
         formattedLogLevel = this.colorize(formattedLogLevel, logLevel);
-        const requestId = this.systemAsyncLocalStorageService.get(CLS_REQUEST_ID) ?? INTERNAL;
+        const requestId = this.systemAsyncLocalStorageService.get('__CLS_REQUEST_ID__') ?? INTERNAL;
         const formattedRequestId = this.colorize(`[${requestId}]`, logLevel);
         return `${pidMessage}${this.getTimestamp()} ${formattedRequestId} ${formattedLogLevel} ${contextMessage}${output}${timestampDiff}\n`;
     }

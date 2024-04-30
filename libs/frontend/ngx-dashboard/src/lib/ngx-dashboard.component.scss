@@ -1,0 +1,40 @@
+.logo {
+    width: 120px;
+    height: 31px;
+    float: left;
+    color: rgb(236, 236, 236);
+    font-size: x-large;
+    cursor: pointer;
+}
+
+[nz-menu] {
+    float: left;
+    line-height: 64px;
+}
+
+.header-right {
+    float: right;
+    cursor: pointer;
+    padding: 0px 12px;
+    height: 64px;
+}
+
+.username {
+    margin-right: 24px;
+    color: rgb(255, 255, 255);
+    font-size: medium;
+}
+
+.avatar {
+    background-color: #f56a00;
+}
+
+nz-layout {
+    height: 100%;
+}
+
+.inner-content {
+    padding: 24px;
+    height: 100%;
+    overflow: auto;
+}

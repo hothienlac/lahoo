@@ -1,6 +1,7 @@
 import { User } from '@lahoo/authentication';
 import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { userStorage } from './user.async-storage';
+import { API_User } from '@lahoo/api';
 
 @Injectable()
 export class SystemAuthenticationService {

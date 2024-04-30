@@ -2,7 +2,7 @@ import { Config } from '@lahoo/config';
 import { Logger } from '@nestjs/common';
 import jwt from 'jsonwebtoken';
 import { User } from '../user/user.type';
-import { JwtPayload, jwtConfigSchema, jwtPayloadSchema } from './jwt.type';
+import { JwtPayload, jwtConfigSchema } from './jwt.type';
 
 export class Jwt {
     private readonly logger = new Logger(Jwt.name);

@@ -1,7 +1,6 @@
 import { CallHandler, ExecutionContext, Injectable, Logger, NestInterceptor } from '@nestjs/common';
 import { Observable, tap } from 'rxjs';
 import { Request } from 'express';
-import { REQUEST_DURATION } from '@lahoo/constant';
 
 @Injectable()
 export class SystemLoggerInterceptor implements NestInterceptor {
@@ -21,7 +20,7 @@ export class SystemLoggerInterceptor implements NestInterceptor {
                 );
                 // Now attach the request duration to the response header.
                 // This is useful for debugging purpose.
-                request.res?.set(REQUEST_DURATION, requestDuration.toString());
+                request.res?.set('Request-Duration', requestDuration.toString());
             }),
         );
     }

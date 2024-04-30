@@ -2,22 +2,33 @@
     "name": "frontend",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "projectType": "application",
-    "prefix": "lahosa",
+    "prefix": "lahoo",
     "sourceRoot": "apps/frontend/src",
     "tags": [],
     "targets": {
         "build": {
             "executor": "@angular-devkit/build-angular:application",
-            "outputs": ["{options.outputPath}"],
+            "outputs": [
+                "{options.outputPath}"
+            ],
             "options": {
                 "outputPath": "dist/apps/frontend",
                 "index": "apps/frontend/src/index.html",
                 "browser": "apps/frontend/src/main.ts",
-                "polyfills": ["zone.js"],
+                "polyfills": [
+                    "zone.js"
+                ],
                 "tsConfig": "apps/frontend/tsconfig.app.json",
                 "inlineStyleLanguage": "scss",
-                "assets": ["apps/frontend/src/favicon.ico", "apps/frontend/src/assets"],
-                "styles": ["apps/frontend/src/styles.scss"],
+                "assets": [
+                    "apps/frontend/src/favicon.ico",
+                    "apps/frontend/src/assets"
+                ],
+                "styles": [
+                    "apps/frontend/src/styles.scss",
+                    "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+                    "node_modules/ng-zorro-antd/code-editor/style/index.css"
+                ],
                 "scripts": []
             },
             "configurations": {
@@ -51,7 +62,8 @@
                     "buildTarget": "frontend:build:production"
                 },
                 "development": {
-                    "buildTarget": "frontend:build:development"
+                    "buildTarget": "frontend:build:development",
+                    "proxyConfig": "./proxy.conf.json"
                 }
             },
             "defaultConfiguration": "development"
@@ -67,7 +79,9 @@
         },
         "test": {
             "executor": "@nx/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "outputs": [
+                "{workspaceRoot}/coverage/{projectRoot}"
+            ],
             "options": {
                 "jestConfig": "apps/frontend/jest.config.ts"
             }
