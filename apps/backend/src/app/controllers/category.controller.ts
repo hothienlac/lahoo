@@ -1,11 +1,12 @@
 import {
     Categories,
+    Category,
     CategoryService,
     CreateCategoryRequest,
     createCategoryRequestSchema,
 } from '@lahoo/store';
 import { ParseBodyPipe } from '@lahoo/system-pipe';
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 
 @Controller('categories')
 export class CategoryController {
@@ -16,6 +17,11 @@ export class CategoryController {
         return this.categoryService.getCategories();
     }
 
+    @Get(':categoryId')
+    async getCategory(@Param('categoryId') categoryId: string): Promise<Category> {
+        return this.categoryService.getCategory(categoryId);
+    }
+
     @Post()
     async createCategory(
         @Body(new ParseBodyPipe(createCategoryRequestSchema))
@@ -23,4 +29,6 @@ export class CategoryController {
     ): Promise<void> {
         return this.categoryService.createCategory(createCategoryRequest);
     }
+
+    // @Put(':categoryId')
 }

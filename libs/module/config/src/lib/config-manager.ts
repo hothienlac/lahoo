@@ -1,6 +1,6 @@
-import { SystemCache, SystemCacheService } from '@lahoo/system-cache';
+import { SingleItemCache, SystemCacheService } from '@lahoo/system-cache';
 import { SystemDrizzleService } from '@lahoo/system-drizzle';
-import { ZodType, infer as ZodInfer } from 'zod';
+import { ZodType, TypeOf } from 'zod';
 import { configCacheKeyPrefix, configCacheTtl } from './config.environment';
 import { configTable } from './database';
 import { eq } from 'drizzle-orm';
@@ -9,7 +9,7 @@ import { InternalServerErrorException, Logger, NotFoundException } from '@nestjs
 export class ConfigManager<T extends ZodType> {
     private readonly logger = new Logger(ConfigManager.name);
     private readonly configCacheKey: string;
-    private readonly configCache: SystemCache<T>;
+    private readonly configCache: SingleItemCache<T>;
 
     constructor(
         private readonly systemDrizzleService: SystemDrizzleService,
@@ -18,7 +18,7 @@ export class ConfigManager<T extends ZodType> {
         private readonly schema: T,
     ) {
         this.configCacheKey = `${configCacheKeyPrefix}:${key}`;
-        this.configCache = this.systemCacheService.createCache(
+        this.configCache = this.systemCacheService.createSingleItemCache(
             this.configCacheKey,
             schema,
             this.getConfigFromDatabase.bind(this),
@@ -39,7 +39,7 @@ export class ConfigManager<T extends ZodType> {
         return rawConfigs[0].value;
     }
 
-    private async getConfigFromDatabase(): Promise<ZodInfer<T>> {
+    private async getConfigFromDatabase(): Promise<TypeOf<T>> {
         const rawConfig = await this.getRawConfigFromDatabase();
         const config = this.schema.safeParse(rawConfig);
         if (!config.success) {
@@ -51,12 +51,12 @@ export class ConfigManager<T extends ZodType> {
         return config.data;
     }
 
-    async get(): Promise<ZodInfer<T>> {
+    async get(): Promise<TypeOf<T>> {
         this.logger.debug(`Getting config [${this.key}]`);
         return this.configCache.getOrReload();
     }
 
-    async create(value: ZodInfer<T>): Promise<void> {
+    async create(value: TypeOf<T>): Promise<void> {
         this.logger.debug(`Creating config [${this.key}]`);
         await this.systemDrizzleService.drizzle
             .insert(configTable)
@@ -64,7 +64,7 @@ export class ConfigManager<T extends ZodType> {
             .execute();
     }
 
-    async update(value: ZodInfer<T>): Promise<void> {
+    async update(value: TypeOf<T>): Promise<void> {
         this.logger.debug(`Updating config [${this.key}]`);
         // Check if the config is existing
         await this.getRawConfigFromDatabase();

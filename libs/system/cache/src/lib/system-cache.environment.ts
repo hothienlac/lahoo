@@ -22,7 +22,7 @@ export const cacheReloadTimeout = systemCacheEnvironment.CACHE_RELOAD_TIMEOUT;
 export const cacheTtlRandomness = systemCacheEnvironment.CACHE_TTL_RANDOMNESS;
 
 // Put here not to import from system-logger to avoid circular dependency
-const logHeader = '[SystemCache]';
+const logHeader = '[SingleItemCache]';
 
 logger.warn(`${logHeader} Cache Key Prefix: ${cacheKeyPrefix}`);
 logger.warn(`${logHeader} Cache Reload Lock Key Prefix: ${cacheReloadLockKeyPrefix}`);

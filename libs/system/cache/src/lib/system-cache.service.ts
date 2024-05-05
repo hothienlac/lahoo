@@ -1,14 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { SystemRedisService } from '@lahoo/system-redis';
 import { SystemLockService } from '@lahoo/system-lock';
-import { SystemCache } from './system-cache';
-import { ZodType, infer as ZodInfer } from 'zod';
-import {
-    cacheDefaultTtl,
-    cacheKeyPrefix,
-    cacheReloadTimeout,
-    cacheTtlRandomness,
-} from './system-cache.environment';
+import { SingleItemCache } from './single-item-cache';
+import { ListCache } from './list-cache';
+import { ZodType, TypeOf, ZodArray, ZodUnknown } from 'zod';
+import { cacheKeyPrefix } from './system-cache.environment';
+import { CacheContext } from './cache-context';
 
 @Injectable()
 export class SystemCacheService {
@@ -19,26 +16,47 @@ export class SystemCacheService {
         private readonly systemLockService: SystemLockService,
     ) {}
 
-    private createCacheKey(key: string): string {
-        return `${cacheKeyPrefix}:${key}`;
+    private createSingleItemCacheKey(key: string): string {
+        return `${cacheKeyPrefix}:SingleItem:${key}`;
     }
 
-    createCache<T extends ZodType>(
+    private createListCacheKey(key: string): string {
+        return `${cacheKeyPrefix}:List:${key}`;
+    }
+
+    createSingleItemCache<T extends ZodType>(
         key: string,
         schema: T,
-        reloadDataFunction: () => Promise<ZodInfer<T>>,
+        reloadDataFunction: () => Promise<TypeOf<T>>,
         ttl?: number,
-    ): SystemCache<T> {
-        const cache = new SystemCache(
+    ): SingleItemCache<T> {
+        const context = new CacheContext(
             this.systemRedisService,
             this.systemLockService,
-            this.createCacheKey(key),
-            schema,
-            ttl ?? cacheDefaultTtl,
             reloadDataFunction,
-            cacheReloadTimeout,
-            cacheTtlRandomness,
+            schema,
+            this.createSingleItemCacheKey(key),
+            ttl,
         );
+        const cache = new SingleItemCache(context);
+        return cache;
+    }
+
+    createListCache<T extends ZodArray<ZodUnknown>>(
+        key: string,
+        schema: T,
+        reloadDataFunction: () => Promise<TypeOf<T>>,
+        ttl?: number,
+    ): ListCache<T> {
+        const context = new CacheContext(
+            this.systemRedisService,
+            this.systemLockService,
+            reloadDataFunction,
+            schema,
+            this.createListCacheKey(key),
+            ttl,
+        );
+        const cache = new ListCache(context);
         return cache;
     }
 }

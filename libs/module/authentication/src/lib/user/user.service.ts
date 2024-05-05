@@ -4,7 +4,7 @@ import { SystemDrizzleService } from '@lahoo/system-drizzle';
 import { eq, sql } from 'drizzle-orm';
 import { JwtService } from '../jwt/jwt.service';
 import { SelectUser, mapToUser, userTable } from '../database/user.table';
-import { SystemCache, SystemCacheService } from '@lahoo/system-cache';
+import { SingleItemCache, SystemCacheService } from '@lahoo/system-cache';
 import { randomUUID } from 'crypto';
 
 @Injectable()
@@ -28,9 +28,9 @@ export class UserService {
         return mapToUser(users[0]);
     }
 
-    private createUserCacheByUserId(userId: string): SystemCache<typeof userSchema> {
+    private createUserCacheByUserId(userId: string): SingleItemCache<typeof userSchema> {
         const cacheKey = `User:UserId:${userId}`;
-        return this.systemCacheService.createCache(
+        return this.systemCacheService.createSingleItemCache(
             cacheKey,
             userSchema,
             this.getUserByIdFromDatabase.bind(this, userId),
@@ -48,9 +48,9 @@ export class UserService {
         return mapToUser(users[0]);
     }
 
-    private createUserCacheByEmail(email: string): SystemCache<typeof userSchema> {
+    private createUserCacheByEmail(email: string): SingleItemCache<typeof userSchema> {
         const cacheKey = `User:Email:${email}`;
-        return this.systemCacheService.createCache(
+        return this.systemCacheService.createSingleItemCache(
             cacheKey,
             userSchema,
             this.getUserByEmailFromDatabase.bind(this, email),
