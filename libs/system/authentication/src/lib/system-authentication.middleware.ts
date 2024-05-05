@@ -15,6 +15,7 @@ export class SystemAuthenticationMiddleware implements NestMiddleware {
     }
 
     use(request: Request, response: Response, next: NextFunction): void {
+        this.logger.debug('Authenticating request');
         const accessToken = this.getAccessToken(request);
         if (!accessToken) {
             this.logger.log('No access token found in request');
@@ -28,7 +29,7 @@ export class SystemAuthenticationMiddleware implements NestMiddleware {
                 return userStorage.run(user, () => next());
             })
             .catch(() => {
-                this.logger.log('User not found');
+                this.logger.log('TOKEN INVALID, treating as anonymous user');
                 return userStorage.run(null, () => next());
             });
     }

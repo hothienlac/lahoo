@@ -25,7 +25,7 @@ export class SystemLock {
         );
         const acquired = result === 'OK';
         if (acquired) {
-            this.logger.debug(`Acquired lock, key: ${this.key}`);
+            this.logger.debug(`Acquired lock, key [${this.key}]`);
         }
         return acquired;
     }
@@ -36,13 +36,13 @@ export class SystemLock {
         while (Date.now() - start < timeoutMs) {
             const result = await this.acquireLock();
             if (result) {
-                this.logger.debug(`Acquired lock with timeout, key: ${this.key}`);
+                this.logger.verbose(`Acquired lock with timeout, key [${this.key}]`);
                 this.lockAcquireAt = Date.now();
                 return true;
             }
             await sleep(this.lockAcquireRetryInterval);
         }
-        this.logger.debug(`Failed to acquire lock with timeout, key: ${this.key}`);
+        this.logger.debug(`Failed to acquire lock with timeout, key [${this.key}]`);
         return false;
     }
 
@@ -54,8 +54,9 @@ export class SystemLock {
                 return 0
             end
         `;
-        this.logger.debug(`Releasing lock, key: ${this.key}`);
+        this.logger.debug(`Releasing lock, key [${this.key}]`);
         await this.systemRedisService.client.eval(releaseScript, 1, this.key, this.lockValue);
+        this.logger.verbose(`Lock released, key [${this.key}]`);
     }
 
     isLockExpired(): boolean {

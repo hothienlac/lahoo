@@ -7,18 +7,22 @@ export const appRoutes: Routes = [
         component: AppComponent,
         children: [
             {
-                path: '',
-                loadChildren: () =>
-                    import('./storefront/storefront.module').then((m) => m.StorefrontModule),
+                path: 'admin',
+                loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
             },
             {
-                path: 'dashboard',
+                path: 'business',
                 loadChildren: () =>
-                    import('@lahoo/ngx-dashboard').then((m) => m.NgxDashboardModule),
+                    import('./business/business.module').then((m) => m.BusinessModule),
             },
             {
                 path: 'login',
                 loadChildren: () => import('@lahoo/ngx-login').then((m) => m.NgxLoginModule),
+            },
+            {
+                path: '**',
+                loadChildren: () =>
+                    import('./storefront/storefront.module').then((m) => m.StorefrontModule),
             },
         ],
     },

@@ -14,22 +14,26 @@ import { DASHBOARD_OPTIONS_TOKEN } from './ngx-dashboard.token';
         {
             provide: ROUTES,
             multi: true,
-            useFactory: (dashboardOptions: DashboardOptions): Routes => [
-                {
-                    path: '',
-                    component: NgxDashboardComponent,
-                    children: [
-                        ...dashboardOptions.menu.map((menu) => ({
-                            path: menu.path,
-                            loadChildren: menu.loadChildren,
-                        })),
-                        {
-                            path: '**',
-                            redirectTo: 'home',
-                        },
-                    ],
-                },
-            ],
+            useFactory: (dashboardOptions: DashboardOptions): Routes => {
+                const routes = [
+                    {
+                        path: '',
+                        component: NgxDashboardComponent,
+                        children: [
+                            ...dashboardOptions.menu.map((menu) => ({
+                                path: menu.path,
+                                loadChildren: menu.loadChildren,
+                            })),
+                            {
+                                path: '**',
+                                redirectTo: 'home',
+                            },
+                        ],
+                    },
+                ];
+                console.log(routes);
+                return routes;
+            },
             deps: [DASHBOARD_OPTIONS_TOKEN],
         },
     ],

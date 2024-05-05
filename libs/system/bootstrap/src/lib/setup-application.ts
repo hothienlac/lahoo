@@ -2,6 +2,7 @@ import { INestApplication, Logger } from '@nestjs/common';
 import helmet from 'helmet';
 import { SystemLoggerFilter, SystemLoggerService } from '@lahoo/system-logger';
 import { GlobalExceptionFilter } from './global.exception-filter';
+import { SystemSentryFilter } from '@lahoo/system-sentry';
 
 const logger = new Logger('Setup Application');
 
@@ -13,6 +14,7 @@ export function setupApplication(app: INestApplication): void {
     const httpAdapter = app.getHttpAdapter();
     const globalExceptionFilter = new GlobalExceptionFilter(httpAdapter, [
         new SystemLoggerFilter(),
+        new SystemSentryFilter(),
     ]);
     app.useGlobalFilters(globalExceptionFilter);
     app.enableCors({ origin: true });

@@ -10,6 +10,7 @@ export class SystemLoggerMiddleware implements NestMiddleware {
     use(request: Request, response: Response, next: NextFunction): void {
         const requestId = generateRandomNumberString(12);
         response.set('Request-Id', requestId);
+        response.set('Request-Begin-Timestamp', Date.now().toString());
         this.systemAsyncLocalStorageService.set('__CLS_REQUEST_ID__', requestId);
         next();
     }

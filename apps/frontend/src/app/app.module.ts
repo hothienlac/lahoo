@@ -7,9 +7,6 @@ import { AppComponent } from './app.component';
 import { NgxFirebaseModule } from '@lahoo/ngx-firebase';
 import { NgxAuthenticationModule } from '@lahoo/ngx-authentication';
 import { appRoutes } from './app.routes';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { DASHBOARD_OPTIONS_TOKEN } from '@lahoo/ngx-dashboard';
-import { menu } from './menu';
 
 @NgModule({
     imports: [
@@ -21,15 +18,6 @@ import { menu } from './menu';
         NgxAuthenticationModule,
     ],
     declarations: [AppComponent],
-    providers: [
-        {
-            provide: DASHBOARD_OPTIONS_TOKEN,
-            useValue: {
-                applicationName: 'Lahoo',
-                menu,
-            },
-        },
-    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

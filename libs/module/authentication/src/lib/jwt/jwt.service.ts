@@ -1,4 +1,4 @@
-import { Config, ConfigService } from '@lahoo/config';
+import { ConfigManager, ConfigService } from '@lahoo/config';
 import { Injectable, Logger } from '@nestjs/common';
 import { User } from '../user/user.type';
 import { jwtConfigSchema, jwtPayloadSchema } from './jwt.type';
@@ -12,26 +12,26 @@ import jwt from 'jsonwebtoken';
 @Injectable()
 export class JwtService {
     private readonly logger = new Logger(JwtService.name);
-    private readonly accessTokenConfig: Config<typeof jwtConfigSchema>;
-    private readonly refreshTokenConfig: Config<typeof jwtConfigSchema>;
+    private readonly accessTokenConfigManager: ConfigManager<typeof jwtConfigSchema>;
+    private readonly refreshTokenConfigManager: ConfigManager<typeof jwtConfigSchema>;
 
     constructor(private readonly configService: ConfigService) {
-        this.accessTokenConfig = this.configService.createConfig(
+        this.accessTokenConfigManager = this.configService.createConfig(
             authenticationAccessTokenConfigKey,
             jwtConfigSchema,
         );
-        this.refreshTokenConfig = this.configService.createConfig(
+        this.refreshTokenConfigManager = this.configService.createConfig(
             authenticationRefreshTokenConfigKey,
             jwtConfigSchema,
         );
     }
 
     createAccessToken(user: User): Jwt {
-        return new Jwt(this.accessTokenConfig, user);
+        return new Jwt(this.accessTokenConfigManager, user);
     }
 
     createRefreshToken(user: User): Jwt {
-        return new Jwt(this.refreshTokenConfig, user);
+        return new Jwt(this.refreshTokenConfigManager, user);
     }
 
     getTokenUserId(token: string): string | null {

@@ -21,10 +21,10 @@ export class NgxAuthenticationService {
                           }
                           return of(null);
                       }),
-                      shareReplay(1),
                   )
                 : of(null),
         ),
+        shareReplay(1),
     );
     isLoggedIn = this.user.pipe(map((user) => !!user));
 
@@ -36,7 +36,12 @@ export class NgxAuthenticationService {
     logout(): void {
         localStorage.clear();
         sessionStorage.clear();
-        location.href = '/login';
+        let redirectUrl = btoa(window.location.pathname + window.location.search);
+        // Remove all '=' from the end of the string
+        while (redirectUrl.endsWith('=')) {
+            redirectUrl = redirectUrl.slice(0, -1);
+        }
+        window.location.href = `/login?redirect=${redirectUrl}`;
     }
 
     async loginGoogle(): Promise<void> {

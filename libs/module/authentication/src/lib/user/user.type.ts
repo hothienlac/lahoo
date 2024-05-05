@@ -26,6 +26,3 @@ export const createUserSchema = z.object({
     email: z.string(),
 });
 export type CreateUser = z.infer<typeof createUserSchema>;
-
-export const updateUserSchema = userSchema.partial();
-export type UpdateUser = z.infer<typeof updateUserSchema>;

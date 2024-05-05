@@ -1,18 +1,19 @@
 <nz-layout>
     <nz-header>
-        <a class="logo" [routerLink]="'/'">{{ options.applicationName }}</a>
+        <a class="logo" [routerLink]="'.'">{{ options.applicationName }}</a>
         <ul nz-menu nzTheme="dark" nzMode="horizontal">
             @for (item of options.menu; track $index) {
-                <a nz-menu-item [nzMatchRouter]="true" [routerLink]="item.path">
-                    {{ item.name }}
-                </a>
+            <a nz-menu-item [nzMatchRouter]="true" [routerLink]="item.path">
+                {{ item.name }}
+            </a>
             }
         </ul>
         <div class="header-right" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
             <span class="username">{{ username | async }}</span>
             <nz-avatar
                 class="avatar"
-                [nzText]="(avtUsername | async) ?? undefined"
+                [nzIcon]="(avtUsername | async) ?? undefined"
+                [nzSrc]="(avtUrl | async) ?? undefined"
                 nzSize="large"
                 style="vertical-align: middle"
             ></nz-avatar>

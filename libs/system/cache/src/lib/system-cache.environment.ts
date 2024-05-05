@@ -8,7 +8,7 @@ const logger = new Logger('System Cache Environment');
 export const systemCacheEnvironmentSchema = z.object({
     CACHE_KEY_PREFIX: z.string().optional().default('Cache'),
     CACHE_RELOAD_LOCK_KEY_PREFIX: z.string().optional().default('CacheReload'),
-    CACHE_DEFAULT_TTL: msZod('5 seconds'),
+    CACHE_DEFAULT_TTL: msZod('1 minute'),
     CACHE_RELOAD_TIMEOUT: msZod('1 second'),
     CACHE_TTL_RANDOMNESS: z.coerce.number().optional().default(0.3),
 });

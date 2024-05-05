@@ -16,6 +16,7 @@ export class LoginService {
     ) {}
 
     async login(idToken: string): Promise<AccessToken> {
+        this.logger.debug('Someone is trying to login');
         const decodedIdToken = await this.systemFirebaseService.checkIdToken(idToken);
         if (!decodedIdToken.email) {
             throw new UnauthorizedException('Something wring with idToken, email not found');
@@ -40,6 +41,7 @@ export class LoginService {
                 avatar: decodedIdToken.picture,
             });
         }
+        this.logger.debug('All checks passed, generating access token');
         const accessToken = this.jwtService.createAccessToken(user);
         return {
             accessToken: await accessToken.generateToken(),

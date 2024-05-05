@@ -4,28 +4,19 @@ import { sentryDsn } from './system-sentry.environment';
 
 Sentry.init({
     dsn: sentryDsn,
+    tracesSampleRate: 1.0,
 });
 
 @Catch()
 export class SystemSentryFilter<T> implements ExceptionFilter {
     private readonly logger = new Logger(SystemSentryFilter.name);
 
-    catch(exception: T, host: ArgumentsHost): never {
-        const httpContext = host.switchToHttp();
-        const request = httpContext.getRequest();
-        const isKnownException = exception instanceof HttpException || exception instanceof Error;
-
-        const exceptionDetails = isKnownException
-            ? exception
-            : {
-                  name: 'Unknown Exception',
-                  message: 'Unknown Exception',
-              };
-
-        this.logger.error(
-            `${request.method} ${request.url} raised an exception! Error: [${exceptionDetails.name}] ${exceptionDetails.message}]`,
-        );
-
+    async catch(exception: T, host: ArgumentsHost): Promise<never> {
+        if (exception instanceof HttpException && exception.getStatus() < 500) {
+            throw exception;
+        }
+        Sentry.captureException(exception);
+        await Sentry.flush(2000);
         throw exception;
     }
 }

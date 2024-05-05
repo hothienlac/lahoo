@@ -8,12 +8,13 @@ export class SystemLoggerInterceptor implements NestInterceptor {
 
     intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
         const request = context.switchToHttp().getRequest<Request>();
-        const beginTime = Date.now();
         const logHeader = `[${request.method}: ${request.url}]`;
         this.logger.debug(`${logHeader} New Request Received!`);
         return next.handle().pipe(
             tap(() => {
                 const endTime = Date.now();
+                const beginTime =
+                    Number(request.res?.get('Request-Begin-Timestamp') ?? '0') || Date.now();
                 const requestDuration = endTime - beginTime;
                 this.logger.log(
                     `${logHeader} responded successfully! Request duration: ${requestDuration}ms.`,

@@ -6,7 +6,7 @@ import { msZod } from '@lahoo/util';
 const logger = new Logger('Config Environment');
 
 export const configEnvironmentSchema = z.object({
-    CONFIG_CACHE_TTL: msZod('1 minute'),
+    CONFIG_CACHE_TTL: msZod('1 hour'),
     CONFIG_CACHE_KEY_PREFIX: z.string().optional().default('Config'),
 });
 

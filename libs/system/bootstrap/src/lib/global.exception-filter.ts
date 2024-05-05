@@ -11,10 +11,10 @@ export class GlobalExceptionFilter extends BaseExceptionFilter {
         super(httpServer);
     }
 
-    override catch(exception: Error, host: ArgumentsHost): void {
+    override async catch(exception: Error, host: ArgumentsHost): Promise<void> {
         for (const filter of this.exceptionFilters) {
             try {
-                exception = filter.catch(exception, host);
+                exception = await filter.catch(exception, host);
             } catch (e) {
                 if (e instanceof Error) {
                     exception = e;
